@@ -9,7 +9,7 @@ It's assumed that you have already setup:
     * a local Minikube cluster
     * the command line tool Kubectl
 
-== Setup the Minikube cluster
+== Setup the Microservices Playground cluster
 NOTE: Make sure to run PowerShell as _Administrator_.
 
 . First, start the Minikube cluster.
@@ -24,6 +24,8 @@ minikube start
 <1> Since we're running on Windows set the VM driver to 'hyperv'
 <2> Increase the amount of memory for the cluster, otherwise Elasticsearch won't be able to start
 <3> Increase the number of CPU's
++
+NOTE: Minikube defaults to 2GB RAM and 2 CPU's.
 
 . Check the Docker environment.
 +
@@ -32,12 +34,14 @@ minikube start
 minikube docker-env
 ----
 
-. Point the local Docker registry to the Docker registry within the Minikube cluster.
+. Set up the environment variables required for Docker to be able to interact with the Minikube VM.
 +
 [source,shell]
 ----
 minikube docker-env | Invoke-Expression
 ----
++
+NOTE: By doing so, you don't need to run Docker locally, which saves both system resources and configuration issues trying to configure Minikube to use a local Docker registry.
 
 . Create the namespace we will be using.
 +
@@ -46,14 +50,16 @@ minikube docker-env | Invoke-Expression
 kubectl create -f kubernetes\development-namespace.yaml
 ----
 
-. Make the development namespace the default namespace (so we don't have to add '-n development' to every command we execute).
+. Set the development namespace to be the default namespace.
 +
 [source,shell]
 ----
 kubectl config set-context $(kubectl config current-context) --namespace=development
 ----
++
+NOTE:  By making this namespace the default namespace we don't have to add '-n development' to every command we execute.
 
-. Build and install the Docker images for all the microservices. Since we just started the Minikube cluster our images are not yet available.
+. Build and install the Docker images for all the microservices in the _Microservices Playground_ project.
 +
 [source,shell]
 ----
@@ -61,10 +67,12 @@ mvn -U // <1>
     clean install
 ----
 <1> Update SNAPSHOT's, to make sure we use the latest SNAPSHOT versions
++
+NOTE: Since we just started the Minikube cluster our images are not yet available in Minikube's Docker registry. Running the command above for each relevant microservice will install the corresponding Docker image.
 
-. Finally, setup the entire Minikube cluster with all of it's _Microservices playground_ components.
+. Finally, deploy all the _Microservices playground_ components into the cluster.
 +
 [source,shell]
 ----
-kubectl create -f kubernetes\development-namespace.yaml
+.\setup.bat
 ----
