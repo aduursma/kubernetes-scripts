@@ -1,0 +1,70 @@
+= Kubernetes scripts
+
+== Introduction
+These are the scripts used to setup up and manage Kubernetes on a Minikube cluster for the _Microservices Playground_ project.
+
+=== Prerequisites
+It's assumed that you have already setup:
+
+    * a local Minikube cluster
+    * the command line tool Kubectl
+
+== Setup the Minikube cluster
+NOTE: Make sure to run PowerShell as _Administrator_.
+
+. First, start the Minikube cluster.
++
+[source,shell]
+----
+minikube start
+    --vm-driver=hyperv // <1>
+    --memory 8192 // <2>
+    --cpus 4 // <3>
+----
+<1> Since we're running on Windows set the VM driver to 'hyperv'
+<2> Increase the amount of memory for the cluster, otherwise Elasticsearch won't be able to start
+<3> Increase the number of CPU's
+
+. Check the Docker environment.
++
+[source,shell]
+----
+minikube docker-env
+----
+
+. Point the local Docker registry to the Docker registry within the Minikube cluster.
++
+[source,shell]
+----
+minikube docker-env | Invoke-Expression
+----
+
+. Create the namespace we will be using.
++
+[source,shell]
+----
+kubectl create -f kubernetes\development-namespace.yaml
+----
+
+. Make the development namespace the default namespace (so we don't have to add '-n development' to every command we execute).
++
+[source,shell]
+----
+kubectl config set-context $(kubectl config current-context) --namespace=development
+----
+
+. Build and install the Docker images for all the microservices. Since we just started the Minikube cluster our images are not yet available.
++
+[source,shell]
+----
+mvn -U // <1>
+    clean install
+----
+<1> Update SNAPSHOT's, to make sure we use the latest SNAPSHOT versions
+
+. Finally, setup the entire Minikube cluster with all of it's _Microservices playground_ components.
++
+[source,shell]
+----
+kubectl create -f kubernetes\development-namespace.yaml
+----

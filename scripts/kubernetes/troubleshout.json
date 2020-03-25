@@ -1,0 +1,11 @@
+{
+    "time": "2020-03-24 07:54:14,212",
+    "level": "WARN",
+    "facility": "JsonLoggerApp",
+    "thread": "[http-nio-8080-exec-1]",
+    "request-uri": "/actuator/health",
+    "request-method": "GET",
+    "correlationid": "",
+    "source": "org.springframework.cloud.kubernetes.StandardPodUtils:79",
+    "message": "Failed to get pod with name:[travel-agency-gateway-5bdb54c64d-zxlts]. You should look into this if things aren't working as you expect. Are you missing serviceaccount permissions?\nio.fabric8.kubernetes.client.KubernetesClientException: Failure executing: GET at: https://10.96.0.1/api/v1/namespaces/development/pods/travel-agency-gateway-5bdb54c64d-zxlts. Message: Forbidden!Configured service account doesn't have access. Service account may have been revoked. pods \"travel-agency-gateway-5bdb54c64d-zxlts\" is forbidden: User \"system:serviceaccount:development:default\" cannot get resource \"pods\" in API group \"\" in the namespace \"development\".\n\tat io.fabric8.kubernetes.client.dsl.base.OperationSupport.requestFailure(OperationSupport.java:503)\n\tat io.fabric8.kubernetes.client.dsl.base.OperationSupport.assertResponseCode(OperationSupport.java:440)\n\tat io.fabric8.kubernetes.client.dsl.base.OperationSupport.handleResponse(OperationSupport.java:406)\n\tat io.fabric8.kubernetes.client.dsl.base.OperationSupport.handleResponse(OperationSupport.java:365)\n\tat io.fabric8.kubernetes.client.dsl.base.OperationSupport.handleGet(OperationSupport.java:330)\n\tat io.fabric8.kubernetes.client.dsl.base.OperationSupport.handleGet(OperationSupport.java:311)\n\n"
+}

@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: elasticsearch
+  labels:
+    service: elasticsearch
+spec:
+  selector:
+    component: elasticsearch
+  ports:
+  - name: "http"
+    port: 9200
+    protocol: TCP
+    targetPort: 9200
+  type: NodePort

@@ -1,0 +1,58 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: relation-service
+  labels:
+    app: relation-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: relation-service
+  template:
+    metadata:
+      labels:
+        app: relation-service
+    spec:
+      containers:
+      - name: relation-service
+        image: registry.hub.docker.com/andreduursma/relation-service
+        imagePullPolicy: Never
+        ports:
+          - containerPort: 8080
+        readinessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8080
+          initialDelaySeconds: 30
+          timeoutSeconds: 2
+          periodSeconds: 10
+          failureThreshold: 2
+          successThreshold: 1
+        livenessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8080
+          initialDelaySeconds: 30
+          timeoutSeconds: 2
+          periodSeconds: 10
+          failureThreshold: 2
+          successThreshold: 1
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: "production"
+        - name: POSTGRES_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              name: postgresdb-config
+              key: database-name
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: postgresdb-secret
+              key: username
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgresdb-secret
+              key: password

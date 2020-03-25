@@ -1,0 +1,58 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: travel-agency-gateway
+  labels:
+    app: travel-agency-gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: travel-agency-gateway
+  template:
+    metadata:
+      labels:
+        app: travel-agency-gateway
+    spec:
+      containers:
+      - name: travel-agency-gateway
+        image: registry.hub.docker.com/andreduursma/travel-agency-gateway
+        imagePullPolicy: Never
+        ports:
+          - containerPort: 8080
+        readinessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8080
+          initialDelaySeconds: 30
+          timeoutSeconds: 2
+          periodSeconds: 10
+          failureThreshold: 2
+          successThreshold: 1
+        livenessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8080
+          initialDelaySeconds: 30
+          timeoutSeconds: 2
+          periodSeconds: 10
+          failureThreshold: 2
+          successThreshold: 1
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: "production"
+        - name: COUNTRY_SERVICE_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: travel-agency-gateway-config
+              key: country-service-host
+        - name: COUNTRY_SERVICE_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: travel-agency-gateway-config
+              key: country-service-port
+        - name: COUNTRY_SERVICE_PROTOCOL
+          valueFrom:
+            configMapKeyRef:
+              name: travel-agency-gateway-config
+              key: country-service-protocol

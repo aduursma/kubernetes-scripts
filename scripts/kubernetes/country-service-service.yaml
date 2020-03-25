@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: country-service
+  labels:
+    app: country-service
+spec:
+  selector:
+    app: country-service
+  ports:
+  - name: "http"
+    port: 8080
+    targetPort: 8080
+    protocol: TCP
+  type: ClusterIP

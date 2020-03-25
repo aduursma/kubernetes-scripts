@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: postgresdb
+  labels:
+    app: postgresdb
+spec:
+  selector:
+    appdb: postgresdb
+  ports:
+  - name: "http"
+    port: 5432
+    protocol: TCP
+    targetPort: 5432
+  type: NodePort

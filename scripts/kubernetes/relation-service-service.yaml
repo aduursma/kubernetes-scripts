@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: relation-service
+  labels:
+    app: relation-service
+spec:
+  selector:
+    app: relation-service
+  ports:
+  - name: "http"
+    port: 8080
+    targetPort: 8080
+    protocol: TCP
+  type: ClusterIP

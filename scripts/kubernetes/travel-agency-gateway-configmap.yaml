@@ -1,0 +1,9 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: travel-agency-gateway-config
+  namespace: development
+data:
+  country-service-host: country-service
+  country-service-port: "8080"
+  country-service-protocol: http

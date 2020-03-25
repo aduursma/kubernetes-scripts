@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: travel-agency-gateway
+  labels:
+    app: travel-agency-gateway
+spec:
+  selector:
+    app: travel-agency-gateway
+  ports:
+  - name: "http"
+    port: 8080
+    nodePort: 30001
+    protocol: TCP
+  type: NodePort
