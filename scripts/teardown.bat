@@ -3,8 +3,8 @@ kubectl delete -f kubernetes\travel-agency-gateway-service.yaml
 kubectl delete -f kubernetes\travel-agency-gateway-configmap.yaml
 kubectl delete -f kubernetes\country-service-deployment.yaml
 kubectl delete -f kubernetes\country-service-service.yaml
-kubectl delete -f kubernetes\relation-service-deployment.yaml
-kubectl delete -f kubernetes\relation-service-service.yaml
+kubectl delete -f kubernetes\customer-service-deployment.yaml
+kubectl delete -f kubernetes\customer-service-service.yaml
 kubectl delete -f kubernetes\mongodb-deployment.yaml
 kubectl delete -f kubernetes\mongodb-service.yaml
 kubectl delete -f kubernetes\mongodb-secret.yaml

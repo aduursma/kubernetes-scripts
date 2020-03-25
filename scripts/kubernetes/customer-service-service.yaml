@@ -1,12 +1,12 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: relation-service
+  name: customer-service
   labels:
-    app: relation-service
+    app: customer-service
 spec:
   selector:
-    app: relation-service
+    app: customer-service
   ports:
   - name: "http"
     port: 8080

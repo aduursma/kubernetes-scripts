@@ -19,8 +19,8 @@ kubectl create -f kubernetes\jaeger-deployment.yaml
 kubectl create -f kubernetes\jaeger-service.yaml
 kubectl create -f kubernetes\country-service-deployment.yaml
 kubectl create -f kubernetes\country-service-service.yaml
-kubectl create -f kubernetes\relation-service-deployment.yaml
-kubectl create -f kubernetes\relation-service-service.yaml
+kubectl create -f kubernetes\customer-service-deployment.yaml
+kubectl create -f kubernetes\customer-service-service.yaml
 kubectl create -f kubernetes\travel-agency-gateway-configmap.yaml
 kubectl create -f kubernetes\travel-agency-gateway-deployment.yaml
 kubectl create -f kubernetes\travel-agency-gateway-service.yaml
